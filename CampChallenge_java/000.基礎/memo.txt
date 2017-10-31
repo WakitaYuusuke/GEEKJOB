@@ -1,0 +1,12 @@
+         Operating System: Windows 10 Home 64-bit (10.0, Build 15063) (15063.rs2_release.170317-1834)
+                 Language: Japanese (Regional Setting: Japanese)
+      System Manufacturer: Dell Inc.
+             System Model: Inspiron 11-3162
+                     BIOS: 1.0.9
+                Processor: Intel(R) Pentium(R) CPU  N3710  @ 1.60GHz (4 CPUs), ~1.6GHz
+                   Memory: 4096MB RAM
+      Available OS Memory: 3994MB RAM
+                Page File: 4409MB used, 765MB available
+              Windows Dir: C:\WINDOWS
+          DirectX Version: DirectX 12
+
