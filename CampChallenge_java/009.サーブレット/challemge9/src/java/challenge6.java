@@ -31,33 +31,38 @@ public class challenge6 extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    String[] makeProfiel (String checkId,PrintWriter pw){
+    String[] makeProfiel (int num,PrintWriter pw){
         Scanner scan = new Scanner(System.in);
         String[] profiel = new String[4];
-        String[] profiel1 = {"Yuusuke","1","...都道府県...市町村...","H10/5/15"};
-        String[] profiel2 = {"A","2","...都道府県...市町村...","～年～月～日"};
-        String[] profiel3 = {"B","3","...都道府県...市町村...","～年～月～日"};
+        String[] profiel1 = {"1","Yuusuke","静岡県","H10/5/15"};
+        String[] profiel2 = {"2","Asan",null,"～年～月～日"};
+        String[] profiel3 = {"3","Bsan","東京都","～年～月～日"};
         
-        if(checkId.equals(profiel1[1])){
-            System.arraycopy(profiel1, 0, profiel, 0, 4);
-        }else if(checkId.equals(profiel2[1])){
-            System.arraycopy(profiel2,0,profiel,0,4);
-        }else if(checkId.equals(profiel3[1])){
-            System.arraycopy(profiel3, 0, profiel, 0, 4);
-        }
-         return profiel;
+        if(num == 0){
+             System.arraycopy(profiel1, 0, profiel, 0, 4);
+         }else if(num == 1){
+             System.arraycopy(profiel2,0,profiel,0,4);
+         }else if(num == 2){
+             System.arraycopy(profiel3, 0, profiel, 0, 4);
+         }
+        
+        return profiel;
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String id = "2";
-            String[] profiel = makeProfiel(id,out);
-            
-            out.print("Name: "+profiel[0]+"<br>");
-            out.print("Addres: "+profiel[2]+"<br>");
-            out.print("Birthday: "+profiel[3]+"<br>");
+            for(int i = 0;i < 3;i ++){
+                String[] profiel = makeProfiel(i,out);
+                for(int ii = 1;ii < 4;ii++){
+                    if(profiel[ii] == null){
+                        continue;
+                    }
+                    out.print(profiel[ii]+"<br>");
+                }
+                
+            }
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
