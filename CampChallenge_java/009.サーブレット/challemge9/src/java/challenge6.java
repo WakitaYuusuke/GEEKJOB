@@ -53,7 +53,8 @@ public class challenge6 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            for(int i = 0;i < 3;i ++){
+            Integer limit = 2;
+            for(int i = 0;i < limit;i ++){
                 String[] profiel = makeProfiel(i,out);
                 for(int ii = 1;ii < 4;ii++){
                     if(profiel[ii] == null){
