@@ -40,7 +40,7 @@ public class FortuneTellinng extends HttpServlet {
            
             Random random = new Random();
             String[] luckList = {"大吉", "中吉", "吉", "半吉", "末小吉", "凶", "小凶", "半凶", "末凶", "凶", "大凶"};
-            int index = random.nextInt(luckList.length+1);
+            int index = random.nextInt(luckList.length);
             out.print(luckList[index]);
             
             ResultData data = new ResultData();
