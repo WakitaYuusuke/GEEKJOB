@@ -2,6 +2,7 @@
 <%
     HttpSession hs = request.getSession();
 %>
+<%@page import="jums.JumsHelper" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,5 +18,7 @@
         電話番号:<%= hs.getAttribute("tell")%><br>
         自己紹介:<%= hs.getAttribute("comment")%><br>
         以上の内容で登録しました。<br>
+        <br>
+        <%=JumsHelper.getInstance().home()%>
     </body>
 </html>

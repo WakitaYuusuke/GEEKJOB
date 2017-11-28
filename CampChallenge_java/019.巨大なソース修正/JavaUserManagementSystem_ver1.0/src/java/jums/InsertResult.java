@@ -1,8 +1,8 @@
 package jums;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,24 +33,34 @@ public class InsertResult extends HttpServlet {
         HttpSession session = request.getSession();
         
         try{
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            
             //ユーザー情報に対応したJavaBeansオブジェクトに格納していく
             UserDataDTO userdata = new UserDataDTO();
             userdata.setName((String)session.getAttribute("name"));
-            Calendar birthday = Calendar.getInstance();
-            userdata.setBirthday(birthday.getTime());
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+            Date birthday = sdf.parse((String)session.getAttribute("year")+"年"+(String)session.getAttribute("month")+"月"+(String)session.getAttribute("day")+"日");
+            userdata.setBirthday(birthday);
             userdata.setType(Integer.parseInt((String)session.getAttribute("type")));
             userdata.setTell((String)session.getAttribute("tell"));
             userdata.setComment((String)session.getAttribute("comment"));
             
             //DBへデータの挿入
-            UserDataDAO .getInstance().insert(userdata);
+   
+            UserDataDAO.getInstance().insert(userdata);
             
             request.getRequestDispatcher("/insertresult.jsp").forward(request, response);
         }catch(Exception e){
             //データ挿入に失敗したらエラーページにエラー文を渡して表示
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            request.getRequestDispatcher("/insertresult.jsp").forward(request, response);
         }
+//      セッションのデータをクリア
+        session.invalidate();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
