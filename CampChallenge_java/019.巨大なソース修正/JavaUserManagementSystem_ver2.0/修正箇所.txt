@@ -1,0 +1,12 @@
+UserDateDAOのsearchメソッドのプレースホルダに正しくセットされてない
+複数の検索結果が表示されない
+複合検索になっていない
+未入力時に全件表示されない
+種別が番号のままで出力される
+ResultData.javaでクエリストリングからuserIDを受け取っていない
+resultdetail.jspから検索一覧に戻れない
+update.jsp, updateresult.jsp, delete.jsp, deleteresult.jspにフォワードされていない
+update.jsp, updateresult..jspから詳細画面に戻れない。
+update.jspで未記入のままフォームが表示される。
+update機能がない
+delete機能がない
