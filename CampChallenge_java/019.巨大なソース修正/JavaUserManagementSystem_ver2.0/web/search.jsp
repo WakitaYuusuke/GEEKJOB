@@ -32,7 +32,7 @@
             <input type="radio" name="type" value="<%=i%>"><%=jh.exTypenum(i)%><br>
             <% } %>
         <br>
-
+        <input type="hidden" name="key" value="access">
         <input type="submit" name="btnSubmit" value="検索">
     </form>
         <br>

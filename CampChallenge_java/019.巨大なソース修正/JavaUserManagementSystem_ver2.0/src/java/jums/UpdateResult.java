@@ -2,6 +2,9 @@ package jums;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,22 +26,38 @@ public class UpdateResult extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UpdateResult</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UpdateResult at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            UserDataDTO originalData = (UserDataDTO)request.getSession().getAttribute("resultData");
+            UserDataBeans udb = new UserDataBeans();
+            
+            request.setCharacterEncoding("UTF-8");
+            
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null || (Integer)request.getSession().getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            udb.setName(request.getParameter("name"));
+            udb.setYear(request.getParameter("year"));
+            udb.setMonth(request.getParameter("month"));
+            udb.setDay(request.getParameter("day"));
+            udb.setTell(request.getParameter("tell"));
+            udb.setType(request.getParameter("type"));
+            udb.setComment(request.getParameter("comment"));
+            
+            UserDataDTO userdata = new UserDataDTO();
+            udb.UD2DTOMapping(userdata);
+            userdata.setUserID(originalData.getUserID());
+            
+            UserDataDAO .getInstance().update(userdata);
+            
+            request.setAttribute("udd", userdata);
+            request.getRequestDispatcher("/updateresult.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 
@@ -54,7 +73,11 @@ public class UpdateResult extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateResult.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -68,7 +91,11 @@ public class UpdateResult extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateResult.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

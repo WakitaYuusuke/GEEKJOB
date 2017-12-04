@@ -2,6 +2,9 @@ package jums;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +30,13 @@ public class DeleteResult extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteResult</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteResult at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                new UserDataDAO().delete(Integer.parseInt(request.getParameter("id")));
+            } catch (SQLException ex) {
+                Logger.getLogger(DeleteResult.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.getRequestDispatcher("/deleteresult.jsp").forward(request, response);
         } finally {
             out.close();
         }

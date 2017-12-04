@@ -59,7 +59,10 @@
 
         自己紹介文
         <br>
-        <textarea name="comment" rows=10 cols=50 style="resize:none" wrap="hard"><% if(reinput){out.print(udb.getComment());}%></textarea><br><br>
+        <textarea name="comment" rows=10 cols=50 style="resize:none" wrap="hard"><%
+            if(reinput){out.print(udb.getComment());
+            }
+        %></textarea><br><br>
         
         <input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
         <input type="submit" name="btnSubmit" value="確認画面へ">

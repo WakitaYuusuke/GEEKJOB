@@ -1,6 +1,7 @@
 package jums;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -17,8 +18,8 @@ public class UserDataDTO {
     private int type;
     private String comment;
     private Timestamp newDate;
-    
-    
+    private int phChecker;
+     
     public int getUserID() {
         return userID;
     }
@@ -66,6 +67,13 @@ public class UserDataDTO {
     }
     public void setNewDate(Timestamp newDate) {
         this.newDate = newDate;
+    }
+    
+    public int getPhChecker() {
+        return phChecker;
+    }
+    public void setPhchecker(int phChecker) {
+        this.phChecker = phChecker;
     }
 
 }

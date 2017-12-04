@@ -33,7 +33,7 @@ public class UserDataBeans implements Serializable{
     }
     public void setName(String name) {
         //空文字(未入力)の場合空文字をセット
-        if(name.trim().length()==0){
+        if(name.trim().length()==0 || name == null){
             this.name = "";
         }else{
             this.name = name;
@@ -45,7 +45,7 @@ public class UserDataBeans implements Serializable{
     }
     public void setYear(String year) {
         //初期選択状態の場合0をセット
-        if(year.equals("")){
+        if(year.equals("") || year == null){
             this.year = 0;
         }else{
             this.year = Integer.parseInt(year);
@@ -56,7 +56,7 @@ public class UserDataBeans implements Serializable{
         return month;
     }
     public void setMonth(String month) {
-        if(month.equals("")){
+        if(month.equals("") || month == null){
             this.month = 0;
         }else{
             this.month = Integer.parseInt(month);
@@ -67,7 +67,7 @@ public class UserDataBeans implements Serializable{
         return day;
     }
     public void setDay(String day) {
-        if(day.equals("")){
+        if(day.equals("") || day == null){
             this.day = 0;
         }else{
             this.day = Integer.parseInt(day);
@@ -78,7 +78,7 @@ public class UserDataBeans implements Serializable{
         return tell;
     }
     public void setTell(String tell) {
-        if(tell.trim().length()==0){
+        if(tell.trim().length()==0 || tell == null){
             this.tell = "";
         }else{
             this.tell = tell;
@@ -101,7 +101,7 @@ public class UserDataBeans implements Serializable{
         return comment;
     }
     public void setComment(String comment) {
-        if(comment.trim().length()==0){
+        if(comment.trim().length()==0 || comment == null){
             this.comment = "";
         }else{
             this.comment = comment;
@@ -151,6 +151,7 @@ public class UserDataBeans implements Serializable{
         udd.setTell(this.tell);
         udd.setType(this.type);
         udd.setComment(this.comment);
+        
     }
     
 }

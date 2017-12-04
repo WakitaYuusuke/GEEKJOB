@@ -1,12 +1,11 @@
 package jums;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,19 +26,27 @@ public class SearchResult extends HttpServlet {
             throws ServletException, IOException {
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
-        
-            //フォームからの入力を取得して、JavaBeansに格納
-            UserDataBeans udb = new UserDataBeans();
-            udb.setName(request.getParameter("name"));
-            udb.setYear(request.getParameter("year"));
-            udb.setType(request.getParameter("type"));
+
+            UserDataBeans forSarch = new UserDataBeans();
+            
+            HttpSession hs = request.getSession();
+            if(request.getParameter("key").equals("access")){
+                //フォームからの入力を取得して、JavaBeansに格納
+                forSarch.setName(request.getParameter("name"));
+                forSarch.setYear(request.getParameter("year"));
+                forSarch.setType(request.getParameter("type"));
+//              search.jspからのアクセス時のみ検索条件をセッションに保存
+                hs.setAttribute("forSarch",forSarch);
+            }
+            
+//          違うページからのアクセスでも前回の検索条件を再び使用
+            UserDataBeans forSarch2 = (UserDataBeans)hs.getAttribute("forSarch");
+
 
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
-            udb.UD2DTOMapping(searchData);
-
-            UserDataDTO resultData = UserDataDAO .getInstance().search(searchData);
-            request.setAttribute("resultData", resultData);
+            forSarch2.UD2DTOMapping(searchData);
+            request.setAttribute("resultList", UserDataDAO .getInstance().search(searchData));
             
             request.getRequestDispatcher("/searchresult.jsp").forward(request, response);  
         }catch(Exception e){
